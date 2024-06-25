@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Journey</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #FF69B4;
+            --secondary-color: #FFB6C1;
+            --background-color: #FFF0F5;
+            --text-color: #333;
+            --accent-color: #FF1493;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 3rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 1.5s ease-out, float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            animation: slideDown 1s ease-out, colorChange 5s infinite alternate;
+        }
+
+        p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            animation: slideUp 1s ease-out, fadeInOut 5s infinite;
+        }
+
+        .teddy-heart-cupcake {
+            font-size: 5rem;
+            animation: pulse 1.5s infinite, float 3s ease-in-out infinite;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s ease;
+        }
+
+        .teddy-heart-cupcake:hover {
+            transform: scale(1.2);
+        }
+
+        .countdown {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-top: 2rem;
+            font-weight: 600;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 182, 193, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 182, 193, 1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes colorChange {
+            0% { color: var(--accent-color); }
+            50% { color: var(--primary-color); }
+            100% { color: var(--secondary-color); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .floating-items {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-item {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: floatUpward 15s linear infinite;
+        }
+
+        @keyframes floatUpward {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(720deg); }
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            z-index: 2;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
+        }
+
+        .popup.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: popupPulse 0.5s ease-in-out;
+        }
+
+        @keyframes popupPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .teddy-heart-cupcake {
+                font-size: 4rem;
+            }
+
+            .countdown {
+                font-size: 1.5rem;
+            }
+
+            .popup {
+                font-size: 2rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="floating-items" id="floating-items"></div>
+<div class="container">
+    <h1>I LOVE YOU </h1>
+    <div class="teddy-heart-cupcake" id="teddy-heart-cupcake">🧸❤️🧁</div>
+    <div class="romantic-message">
+        <p>Baby always remember that I love you so much. Your time, attention, love, care, and everything, is valuable to me.
+            Just always remember that I love you very much, that I'm always here to cheer you up that I'm always here to take care of you,
+            and always remember that I'm here to support you no matter what.</p>
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        .romantic-message {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+            font-size: 2.0rem;
+            color: #FF69B4;
+            text-shadow: 0 0 5px #FF69B4, 0 0 10px #FF69B4, 0 0 15px #FF69B4;
+            animation: glow 2s ease-in-out infinite alternate;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #FF69B4, 0 0 10px #FF69B4, 0 0 15px #FF69B4;
+            }
+            to {
+                text-shadow: 0 0 10px #FF69B4, 0 0 20px #FF69B4, 0 0 30px #FF69B4;
+            }
+        }
+    </style>
+
+    <div class="countdown" id="countdown"></div>
+</div>
+<div class="popup" id="popup">I LOVE YOU</div>
+
+<script>
+    // Countdown timer
+    function updateCountdown() {
+        const startDate = new Date('2022-12-28');
+        const now = new Date();
+        const timeDiff = now - startDate;
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Floating items animation
+    function createFloatingItem() {
+        const item = document.createElement('div');
+        item.classList.add('floating-item');
+        const emojis = ['❤️', '🌹', '🧸', '🧁'];
+        item.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        item.style.left = Math.random() * 100 + 'vw';
+        item.style.animationDuration = Math.random() * 5 + 10 + 's';
+        item.style.fontSize = Math.random() * 1 + 1 + 'rem';
+        item.style.opacity = Math.random() * 0.5 + 0.1;
+        document.getElementById('floating-items').appendChild(item);
+
+        setTimeout(() => {
+            item.remove();
+        }, 15000);
+    }
+
+    setInterval(createFloatingItem, 300);
+
+    // Teddy heart cupcake click event
+    const teddyHeartCupcake = document.getElementById('teddy-heart-cupcake');
+    const popup = document.getElementById('popup');
+
+    teddyHeartCupcake.addEventListener('click', () => {
+        popup.classList.add('show');
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 2000);
+    });
+</script>
+</body>
+</html>
